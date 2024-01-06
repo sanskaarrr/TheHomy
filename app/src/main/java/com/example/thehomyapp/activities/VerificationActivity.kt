@@ -11,9 +11,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.example.thehomyapp.R
+import com.example.thehomyapp.firebase.FirestoreClass
+import com.example.thehomyapp.model.User
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -97,8 +101,11 @@ class VerificationActivity : BaseActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d("VerificationActivity", "signInWithCredential: success")
-                    val user = task.result?.user
-                    CurrentUserID(user)
+                    val FirebaseUser= task.result?.user
+
+                    val user= User(FirebaseUser!!.uid,phoneNum)
+
+                    FirestoreClass().registerUser(this,user)
                     redirectToHomepage()
                 } else {
                     Log.w("VerificationActivity", "signInWithCredential: failure", task.exception)
@@ -165,8 +172,15 @@ class VerificationActivity : BaseActivity() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         countdownTimer.cancel() // Cancel the countdown timer to avoid leaks
     }
+    fun userRegisteredSuccess(){
+        Toast.makeText(this,"Registered",Toast.LENGTH_LONG).show()
+
+    }
+
+
 }

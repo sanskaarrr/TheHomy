@@ -111,6 +111,7 @@ class LoginActivity : BaseActivity() {
             intent.putExtra("phoneNumber",phoneNumber)
             intent.putExtra("phoneAuthCredential", credential)
             startActivity(intent)
+            finish()
 
         }
 
