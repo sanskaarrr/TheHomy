@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">TheHomyApp</string>
+    <string name="welcome_to_thehomy">Welcome to TheHomy</string>
+    <string name="enter_your_number">Enter your number</string>
+    <string name="india">India</string>
+    <string name="indian_code">+91</string>
+    <string name="get_verification_code">Get Verification Code</string>
+    <string name="didn_t_recieve_the_otp">Didn\'t recieve the OTP?</string>
+    <string name="please_click_back_again_to_exit">Please click back again to exit</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="resend_code_in">Resend code in %1$d seconds</string>
+    <string name="location">Location</string>
+
+</resources>
