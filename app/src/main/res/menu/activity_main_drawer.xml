@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_profile"
+            android:icon="@drawable/profile"
+            android:title="My Profile" />
+        <item
+            android:id="@+id/nav_add_location"
+            android:icon="@drawable/location"
+            android:title="Add Address" />
+        <item
+            android:id="@+id/manage_address"
+            android:icon="@drawable/ic_address_manage"
+            android:title="Manage Addresses" />
+        <item
+            android:id="@+id/share_TH"
+            android:icon="@drawable/share_th"
+            android:title="Share The Homy"/>
+        <item
+            android:id="@+id/ratenreview"
+            android:icon="@drawable/rate"
+            android:title="@string/rate_review"/>
+        <item
+            android:id="@+id/help_center"
+            android:icon="@drawable/help_center"
+            android:title="Help Center"/>
+        <item
+            android:id="@+id/signout"
+            android:icon="@drawable/sign_out"
+            android:title="Sign Out"/>
+    </group>
+</menu>
