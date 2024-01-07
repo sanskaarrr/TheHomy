@@ -181,6 +181,9 @@ class VerificationActivity : BaseActivity() {
         Toast.makeText(this,"Registered",Toast.LENGTH_LONG).show()
 
     }
+    fun userAlreadyRegistered(){
+        Toast.makeText(this,"Already Registered",Toast.LENGTH_LONG).show()
+    }
 
 
 }

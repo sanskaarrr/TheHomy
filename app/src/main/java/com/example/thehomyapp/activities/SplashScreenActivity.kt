@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import com.example.thehomyapp.R
+import com.example.thehomyapp.firebase.FirestoreClass
 
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -23,8 +24,17 @@ class SplashScreenActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+
+
+            var currentUserId=FirestoreClass().getCurrentUserId()
+            if(currentUserId.isNotEmpty()){
+                startActivity(Intent(this, DasboardActivity::class.java))
+            }else{
+                startActivity(Intent(this, LoginActivity::class.java))
+
+            }
+                finish()
+
         },2500)
 
         val imageView = findViewById<ImageView>(R.id.logo_splash)

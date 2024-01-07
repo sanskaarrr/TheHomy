@@ -12,15 +12,36 @@ import com.google.firebase.firestore.SetOptions
 class FirestoreClass {
     private val mFireStore= FirebaseFirestore.getInstance()
     fun registerUser(activity: VerificationActivity,userInfo: User){
+        val userId=getCurrentUserId()
+
         mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserId()).set(userInfo, SetOptions.merge())
-            .addOnSuccessListener {
-                activity.userRegisteredSuccess()
+            .document(userId)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // User already exists, do not register again
+                    activity.userAlreadyRegistered()
+                } else {
+                    // User does not exist, proceed with registration
+                    mFireStore.collection(Constants.USERS)
+                        .document(userId)
+                        .set(userInfo, SetOptions.merge())
+                        .addOnSuccessListener {
+                            activity.userRegisteredSuccess()
+                        }
+                }
+            }
+            .addOnFailureListener { exception ->
             }
 
     }
 
     fun getCurrentUserId(): String{
-        return FirebaseAuth.getInstance().currentUser!!.uid
+        var currentUser= FirebaseAuth.getInstance().currentUser
+        var currentUserId=""
+        if(currentUser!=null){
+            currentUserId=currentUser.uid
+        }
+        return currentUserId
     }
 }
