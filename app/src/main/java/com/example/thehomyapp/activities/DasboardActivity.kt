@@ -3,6 +3,7 @@ package com.example.thehomyapp.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -12,7 +13,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.thehomyapp.R
+import com.example.thehomyapp.firebase.FirestoreClass
+import com.example.thehomyapp.model.User
 import com.example.thehomyapp.utils.LocationUtils
 import com.example.thehomyapp.utils.LocationViewModel
 
@@ -67,6 +71,8 @@ class DasboardActivity : BaseActivity() , OnNavigationItemSelectedListener{
 
         }
         navi_view.setNavigationItemSelectedListener(this)
+
+        FirestoreClass().loadUserData(this)
 
 
 
@@ -127,9 +133,54 @@ class DasboardActivity : BaseActivity() , OnNavigationItemSelectedListener{
                 startActivity(intent)
                 finish()
             }
+            R.id.nav_my_profile->{
+                startActivity(Intent(this,ProfileActivity::class.java))
+            }
+            R.id.help_center->{
+                openWhatsAppChat("+918310519564")
+            }
         }
         drawer_layout_dashboard.closeDrawer(GravityCompat.START)
         return true
+    }
+    fun updateNavigationUserDetails(user: User) {
+        // The instance of the header view of the navigation view.
+        val headerView = navi_view.getHeaderView(0)
+
+        // The instance of the user image of the navigation view.
+        val navUserImage = headerView.findViewById<ImageView>(R.id.drawer_image)
+
+        // Load the user image in the ImageView.
+
+        Glide
+            .with(this)
+            .load(user.image) // URL of the image
+            .centerCrop() // Scale type of the image.
+            .placeholder(R.drawable.profile) // A default place holder
+            .into(navUserImage) // the view in which the image will be loaded.
+        val username=findViewById<TextView>(R.id.tv_username_drawer)
+        username.text=user.name
+
+    }
+    fun openWhatsAppChat(phoneNumber: String) {
+        try {
+            // Format the phone number by removing non-numeric characters
+            val formattedPhoneNumber = phoneNumber.replace("[^0-9]".toRegex(), "")
+
+            // Create a URI for the WhatsApp chat link
+            val uri = Uri.parse("https://wa.me/$formattedPhoneNumber")
+
+            // Create an Intent with the ACTION_VIEW action and the specified URI
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+
+            // Start the Intent (assuming this function is called within an activity)
+            startActivity(intent)
+
+        } catch (e: Exception) {
+            // Handle exceptions if WhatsApp is not installed or other issues
+            e.printStackTrace()
+            // You might want to notify the user or log the error
+        }
     }
 
 }
